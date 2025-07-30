@@ -56,5 +56,9 @@ public class Author {
     }
 
     public void setBooks(Book book) {
+        if (!books.contains(book)) {
+            books.add(book);
+            book.getAuthor().add(this);
+        }
     }
 }
