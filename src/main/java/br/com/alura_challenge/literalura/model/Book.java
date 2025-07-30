@@ -18,7 +18,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
     private List<Language> languages;
-    private Double downloadsNumber;
+    private Integer downloadsNumber;
 
     public Integer getId() {
         return id;
@@ -62,11 +62,11 @@ public class Book {
         }
     }
 
-    public Double getDownloadsNumber() {
+    public Integer getDownloadsNumber() {
         return downloadsNumber;
     }
 
-    public void setDownloadsNumber(Double downloadsNumber) {
+    public void setDownloadsNumber(Integer downloadsNumber) {
         this.downloadsNumber = downloadsNumber;
     }
 }
