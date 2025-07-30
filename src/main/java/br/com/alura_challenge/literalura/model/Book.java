@@ -35,6 +35,12 @@ public class Book {
     }
 
     public void setAuthor(List<Author> authors) {
+        this.authors = authors;
+        for (Author author : authors) {
+            if (!author.getBooks().contains(this)) {
+                author.getBooks().add(this);
+            }
+        }
     }
 
     public List<Language> getLanguage() {
