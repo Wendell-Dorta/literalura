@@ -55,10 +55,12 @@ public class Author {
         return books;
     }
 
-    public void setBooks(Book book) {
-        if (!books.contains(book)) {
-            books.add(book);
-            book.getAuthor().add(this);
+    public void setBooks(List<Book> books) {
+        this.books = books;
+        for (Book book : books) {
+            if (!book.getAuthor().contains(this)) {
+                book.getAuthor().add(this);
+            }
         }
     }
 }
