@@ -1,17 +1,25 @@
 package br.com.alura_challenge.literalura.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="languages")
 public class Language {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String acronyms;
+    private String code;
     @ManyToMany(mappedBy = "languages", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> books = new ArrayList<>();
+
+    public Language() {}
+
+    public Language(String code) {
+        this.code = code;
+    }
 
     public Integer getId() {
         return id;
@@ -22,11 +30,11 @@ public class Language {
     }
 
     public String getAcronyms() {
-        return acronyms;
+        return code;
     }
 
     public void setAcronyms(String acronyms) {
-        this.acronyms = acronyms;
+        this.code = acronyms;
     }
 
     public List<Book> getBooks() {
