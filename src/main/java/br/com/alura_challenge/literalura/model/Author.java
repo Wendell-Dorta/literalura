@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
+@Table(name="authors")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,12 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private List<Book> books;
+
+    public Author(String name, String birth_year, String death_year) {
+        this.name = name;
+        this.birth_year = birth_year;
+        this.death_year = death_year;
+    }
 
     public Integer getId() {
         return id;
