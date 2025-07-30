@@ -1,10 +1,23 @@
 package br.com.alura_challenge.literalura.model;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
 public class Author {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String birth_year;
     private String death_year;
+    @ManyToMany
+    @JoinTable(
+            name = "author_book",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> books;
 
     public Integer getId() {
         return id;
@@ -22,19 +35,26 @@ public class Author {
         this.name = name;
     }
 
-    public String getBirth_year() {
+    public String getBirthYear() {
         return birth_year;
     }
 
-    public void setBirth_year(String birth_year) {
+    public void setBirthYear(String birth_year) {
         this.birth_year = birth_year;
     }
 
-    public String getDeath_year() {
+    public String getDeathYear() {
         return death_year;
     }
 
-    public void setDeath_year(String death_year) {
+    public void setDeathYear(String death_year) {
         this.death_year = death_year;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Book book) {
     }
 }

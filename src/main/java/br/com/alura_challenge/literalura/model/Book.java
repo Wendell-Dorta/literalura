@@ -1,10 +1,15 @@
 package br.com.alura_challenge.literalura.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Author> authors;
     private List<Language> languages;
     private Double downloadsNumber;
