@@ -11,6 +11,12 @@ public class Book {
     private String title;
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Author> authors;
+    @ManyToMany
+    @JoinTable(
+            name = "book_language",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id")
+    )
     private List<Language> languages;
     private Double downloadsNumber;
 
@@ -43,12 +49,17 @@ public class Book {
         }
     }
 
-    public List<Language> getLanguage() {
+    public List<Language> getLanguages() {
         return languages;
     }
 
     public void setLanguage(List<Language> languages) {
         this.languages = languages;
+        for (Language language : languages) {
+            if (!language.getBooks().contains(this)) {
+                language.getBooks().add(this);
+            }
+        }
     }
 
     public Double getDownloadsNumber() {
