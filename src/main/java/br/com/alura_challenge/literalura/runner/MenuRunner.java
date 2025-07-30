@@ -1,11 +1,11 @@
-package br.com.alura_challenge.literalura.main;
+package br.com.alura_challenge.literalura.runner;
 
 import java.util.Scanner;
 
-public class Menu {
-    private Scanner leitura = new Scanner(System.in);
+public class MenuRunner {
+    private final Scanner leitura = new Scanner(System.in);
 
-    public void showMenu(){
+    public void showMenu() {
         var opcao = -1;
 
         while (opcao != 0) {

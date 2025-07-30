@@ -1,6 +1,6 @@
 package br.com.alura_challenge.literalura;
 
-import br.com.alura_challenge.literalura.main.Menu;
+import br.com.alura_challenge.literalura.runner.MenuRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Menu menu = new Menu();
+		MenuRunner menu = new MenuRunner();
 		menu.showMenu();
 	}
 }
