@@ -2,6 +2,7 @@ package br.com.alura_challenge.literalura.runner;
 
 import br.com.alura_challenge.literalura.service.AuthorService;
 import br.com.alura_challenge.literalura.service.BookService;
+import br.com.alura_challenge.literalura.service.LanguageService;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -11,10 +12,12 @@ public class MenuRunner {
     private final Scanner scanner = new Scanner(System.in);
     private final BookService bookService;
     private final AuthorService authorService;
+    private final LanguageService languageService;
 
-    public MenuRunner(BookService bookService, AuthorService authorService) {
+    public MenuRunner(BookService bookService, AuthorService authorService, LanguageService languageService) {
         this.bookService = bookService;
         this.authorService = authorService;
+        this.languageService = languageService;
     }
 
     public void showMenu() {
@@ -51,7 +54,7 @@ public class MenuRunner {
                     searchLivingAuthorsByYear();
                     break;
                 case 5:
-                    //searchBooksByLanguage();
+                    searchBooksByLanguage();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -69,9 +72,16 @@ public class MenuRunner {
     }
 
     private void searchLivingAuthorsByYear() {
-        System.out.println("VocÊ que ver autores vivos em qual ano?");
+        System.out.println("Você que ver autores vivos em qual ano?");
         Integer year = scanner.nextInt();
         scanner.nextLine();
         authorService.findLivingAuthorsInYear(year);
+    }
+
+    private void searchBooksByLanguage() {
+        System.out.println("você quer ver livros em qual idioma?");
+        languageService.findAllLanguages();
+        var language = scanner.nextLine();
+        bookService.findBooksByLanguage(language);
     }
 }
