@@ -38,4 +38,13 @@ public class AuthorService {
             authors.forEach(System.out::println);
         }
     }
+
+    public void findLivingAuthorsInYear(Integer year) {
+        List<Author> authors = repository.findAuthorsAliveInYear(year);
+        if (authors.isEmpty()) {
+            System.out.println("Nenhum autor vivo neste ano.");
+        } else {
+            authors.forEach(System.out::println);
+        }
+    }
 }
