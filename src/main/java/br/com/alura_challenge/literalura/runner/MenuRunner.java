@@ -1,5 +1,6 @@
 package br.com.alura_challenge.literalura.runner;
 
+import br.com.alura_challenge.literalura.service.AuthorService;
 import br.com.alura_challenge.literalura.service.BookService;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +10,11 @@ import java.util.Scanner;
 public class MenuRunner {
     private final Scanner scanner = new Scanner(System.in);
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public MenuRunner(BookService bookService) {
+    public MenuRunner(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     public void showMenu() {
@@ -42,7 +45,7 @@ public class MenuRunner {
                     bookService.listAllBooks();
                     break;
                 case 3:
-                    //listRegisteredAuthors();
+                    authorService.listRegisteredAuthors();
                     break;
                 case 4:
                     //searchLivingAuthorsByYear();
