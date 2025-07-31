@@ -48,7 +48,7 @@ public class MenuRunner {
                     authorService.listRegisteredAuthors();
                     break;
                 case 4:
-                    //searchLivingAuthorsByYear();
+                    searchLivingAuthorsByYear();
                     break;
                 case 5:
                     //searchBooksByLanguage();
@@ -66,5 +66,12 @@ public class MenuRunner {
         System.out.println("Qual o livro que deseja buscar?");
         String bookName = scanner.nextLine();
         bookService.searchBooksWeb(bookName);
+    }
+
+    private void searchLivingAuthorsByYear() {
+        System.out.println("VocÊ que ver autores vivos em qual ano?");
+        Integer year = scanner.nextInt();
+        scanner.nextLine();
+        authorService.findLivingAuthorsInYear(year);
     }
 }
