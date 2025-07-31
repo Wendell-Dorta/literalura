@@ -10,6 +10,9 @@ import br.com.alura_challenge.literalura.util.ConvertData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
@@ -44,11 +47,15 @@ public class BookService {
         return bookData;
     }
 
-
     public void searchBooksWeb() {
         BookData bookData = getBookData();
         Book book = BookMapper.toEntity(bookData);
         bookRepository.save(book);
         System.out.println(book);
+    }
+
+    public void listAllBooks() {
+        List<Book> books =bookRepository.findAll();
+        books.forEach(System.out::println);
     }
 }
