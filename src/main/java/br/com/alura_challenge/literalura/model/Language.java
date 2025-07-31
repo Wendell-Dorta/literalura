@@ -11,6 +11,7 @@ public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true)
     private String code;
     @ManyToMany(mappedBy = "languages")
     private List<Book> books = new ArrayList<>();
