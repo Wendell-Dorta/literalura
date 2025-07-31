@@ -2,6 +2,8 @@ package br.com.alura_challenge.literalura.service;
 
 import br.com.alura_challenge.literalura.dto.BookData;
 import br.com.alura_challenge.literalura.dto.BookResultsData;
+import br.com.alura_challenge.literalura.mapper.BookMapper;
+import br.com.alura_challenge.literalura.model.Book;
 import br.com.alura_challenge.literalura.repository.BookRepository;
 import br.com.alura_challenge.literalura.util.ConsumptionApi;
 import br.com.alura_challenge.literalura.util.ConvertData;
@@ -40,5 +42,13 @@ public class BookService {
         BookData bookData = resultsData.results().get(0);
 
         return bookData;
+    }
+
+
+    public void searchBooksWeb() {
+        BookData bookData = getBookData();
+        Book book = BookMapper.toEntity(bookData);
+        bookRepository.save(book);
+        System.out.println(book);
     }
 }
