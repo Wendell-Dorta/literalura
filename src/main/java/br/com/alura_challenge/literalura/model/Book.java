@@ -2,6 +2,7 @@ package br.com.alura_challenge.literalura.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,16 +14,30 @@ public class Book {
     private Integer id;
     @Column(unique = true)
     private String title;
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Author> authors;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "author_book",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_language",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
-    private List<Language> languages;
+    private List<Language> languages = new ArrayList<>();
     private Integer downloadsNumber;
+
+    public  Book() {}
+
+    public  Book(String title, List<Author> authors, List<Language> languages, Integer downloadsNumber) {
+        this.title = title;
+        this.authors = authors;
+        this.languages = languages;
+        this.downloadsNumber = downloadsNumber;
+    }
 
     public Integer getId() {
         return id;
@@ -40,30 +55,16 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthor() {
-        return authors;
-    }
+    public List<Author> getAuthor() { return authors; }
 
     public void setAuthor(List<Author> authors) {
         this.authors = authors;
-        for (Author author : authors) {
-            if (!author.getBooks().contains(this)) {
-                author.getBooks().add(this);
-            }
-        }
     }
 
-    public List<Language> getLanguages() {
-        return languages;
-    }
+    public List<Language> getLanguages() { return languages; }
 
     public void setLanguage(List<Language> languages) {
         this.languages = languages;
-        for (Language language : languages) {
-            if (!language.getBooks().contains(this)) {
-                language.getBooks().add(this);
-            }
-        }
     }
 
     public Integer getDownloadsNumber() {

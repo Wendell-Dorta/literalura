@@ -12,16 +12,13 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(unique = true)
     private String name;
     private String birthYear;
     private String deathYear;
-    @ManyToMany
-    @JoinTable(
-            name = "author_book",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+
+    @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 
     public Author() {}
@@ -64,21 +61,9 @@ public class Author {
         this.deathYear = deathYear;
     }
 
-    public List<Book> getBooks() {
-        if (books == null) {
-            books = new ArrayList<>();
-        }
-        return books;
-    }
+    public List<Book> getBooks() { return books; }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-        for (Book book : books) {
-            if (!book.getAuthor().contains(this)) {
-                book.getAuthor().add(this);
-            }
-        }
-    }
+    public void setBooks(List<Book> books) { this.books = books; }
 
     @Override
     public String toString() {

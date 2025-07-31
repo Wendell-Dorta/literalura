@@ -11,8 +11,10 @@ public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(unique = true)
     private String code;
+
     @ManyToMany(mappedBy = "languages")
     private List<Book> books = new ArrayList<>();
 
@@ -38,17 +40,7 @@ public class Language {
         this.code = acronyms;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
+    public List<Book> getBooks() { return books; }
 
-    public void setBook(List<Book> books) {
-        this.books = books;
-
-        for (Book book : books) {
-            if (!book.getLanguages().contains(this)) {
-                book.getLanguages().add(this);
-            }
-        }
-    }
+    public void setBooks(List<Book> books) { this.books = books; }
 }
