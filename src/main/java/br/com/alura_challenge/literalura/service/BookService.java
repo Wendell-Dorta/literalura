@@ -49,14 +49,9 @@ public class BookService {
         Optional<Book> existingBook = repository.findByTitleIgnoreCase(bookData.title());
 
         if (existingBook.isPresent()) {
-            System.out.println("\n>>> A verificação de duplicatas encontrou um livro existente. A operação de salvar será ignorada. <<<");
-            System.out.println("Título buscado na API: '" + bookData.title() + "'");
-            System.out.println("Livro encontrado no banco:");
             System.out.println(existingBook.get());
             return;
         }
-
-        System.out.println("\n>>> Nenhum livro duplicado encontrado. Prosseguindo para salvar... <<<");
 
         List<Author> managedAuthors = authorService.findAndSaveAuthors(bookData.authors());
         List<Language> managedLanguages = languageService.findAndSaveLanguages(bookData.languages());
