@@ -2,8 +2,9 @@ package br.com.alura_challenge.literalura.service;
 
 import br.com.alura_challenge.literalura.dto.BookData;
 import br.com.alura_challenge.literalura.dto.BookResultsData;
-import br.com.alura_challenge.literalura.mapper.BookMapper;
+import br.com.alura_challenge.literalura.model.Author;
 import br.com.alura_challenge.literalura.model.Book;
+import br.com.alura_challenge.literalura.model.Language;
 import br.com.alura_challenge.literalura.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +15,62 @@ import java.util.Optional;
 public class BookService {
     private final GutendexApiHelper helper;
     private final BookRepository repository;
+    private final AuthorService authorService;
+    private final LanguageService languageService;
 
-    public BookService(GutendexApiHelper helper, BookRepository repository) {
-        this.helper = helper;
+    public BookService(BookRepository repository, AuthorService authorService, LanguageService languageService, GutendexApiHelper helper) {
         this.repository = repository;
+        this.authorService = authorService;
+        this.languageService = languageService;
+        this.helper = helper;
     }
 
-    private BookData getBookData(String bookName) {
+    private Optional<BookData> getBookData(String bookName) {
         String url = helper.getEndereco() + "search=" + bookName.replace(" ", "+");
         var json = helper.getApi().getData(url);
         BookResultsData resultsData = helper.getConvertData().getData(json, BookResultsData.class);
 
         if (resultsData.results().isEmpty()) {
-            throw new RuntimeException("Nenhum livro encontrado para: " + bookName);
-
+            System.out.println("Nenhum livro encontrado para: " + bookName);
+            return Optional.empty();
         }
 
-        return resultsData.results().get(0);
+        return Optional.of(resultsData.results().get(0));
     }
 
     public void searchBooksWeb(String bookName) {
-        BookData bookData = getBookData(bookName);
-        Book book = BookMapper.toEntity(bookData);
+        Optional<BookData> bookDataOptional = getBookData(bookName);
+
+        if (bookDataOptional.isEmpty()) {
+            return;
+        }
+
+        BookData bookData = bookDataOptional.get();
+        Optional<Book> existingBook = repository.findByTitleIgnoreCase(bookData.title());
+
+        if (existingBook.isPresent()) {
+            System.out.println("\n>>> A verificação de duplicatas encontrou um livro existente. A operação de salvar será ignorada. <<<");
+            System.out.println("Título buscado na API: '" + bookData.title() + "'");
+            System.out.println("Livro encontrado no banco:");
+            System.out.println(existingBook.get());
+            return;
+        }
+
+        System.out.println("\n>>> Nenhum livro duplicado encontrado. Prosseguindo para salvar... <<<");
+
+        List<Author> managedAuthors = authorService.findAndSaveAuthors(bookData.authors());
+        List<Language> managedLanguages = languageService.findAndSaveLanguages(bookData.languages());
+
+        Book book = new Book();
+        book.setTitle(bookData.title());
+        book.setDownloadsNumber(bookData.downloadsNumber());
+
+        book.setAuthor(managedAuthors);
+        book.setLanguage(managedLanguages);
+
         repository.save(book);
+
+        System.out.println("\n>>> Livro salvo com sucesso! <<<\n");
         System.out.println(book);
     }
 
