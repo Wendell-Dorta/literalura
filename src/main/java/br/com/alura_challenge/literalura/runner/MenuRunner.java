@@ -1,9 +1,18 @@
 package br.com.alura_challenge.literalura.runner;
 
+import br.com.alura_challenge.literalura.service.BookService;
+import org.springframework.stereotype.Component;
+
 import java.util.Scanner;
 
+@Component
 public class MenuRunner {
-    private final Scanner leitura = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+    private final BookService bookService;
+
+    public MenuRunner(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     public void showMenu() {
         var opcao = -1;
@@ -21,13 +30,13 @@ public class MenuRunner {
                     -----------------------------------------------
                     """;
 
-            System.out.println(menu);
-            opcao = leitura.nextInt();
-            leitura.nextLine();
+            System.out.println("\n" + menu);
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    //searchBookByTitle();
+                    bookService.searchBooksWeb();
                     break;
                 case 2:
                     //searchRegisteredBooks();
