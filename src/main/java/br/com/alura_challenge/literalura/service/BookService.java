@@ -5,38 +5,29 @@ import br.com.alura_challenge.literalura.dto.BookResultsData;
 import br.com.alura_challenge.literalura.mapper.BookMapper;
 import br.com.alura_challenge.literalura.model.Book;
 import br.com.alura_challenge.literalura.repository.BookRepository;
-import br.com.alura_challenge.literalura.util.ConsumptionApi;
-import br.com.alura_challenge.literalura.util.ConvertData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
 
 @Service
 public class BookService {
-    private final Scanner scanner = new Scanner(System.in);
-    private final ConsumptionApi api;
-    private final ConvertData convertData;
-    private final String ENDERECO = "https://gutendex.com/books/?";
+    private final CommonServiceHelper helper;
+
+    public BookService(CommonServiceHelper helper) {
+        this.helper = helper;
+    }
 
     @Autowired
     private BookRepository bookRepository;
 
-    public BookService(ConsumptionApi api, ConvertData convertData) {
-        this.api = api;
-        this.convertData = convertData;
-    }
-
     private BookData getBookData() {
         System.out.println("Digite o nome de um livro para buscar");
-        var bookName = scanner.nextLine();
+        var bookName = helper.getScanner().nextLine();
 
-        String url = ENDERECO + "search=" + bookName.replace(" ", "+");
-        var json = api.getData(url);
-        BookResultsData resultsData = convertData.getData(json, BookResultsData.class);
+        String url = helper.getEndereco() + "search=" + bookName.replace(" ", "+");
+        var json = helper.getApi().getData(url);
+        BookResultsData resultsData = helper.getConvertData().getData(json, BookResultsData.class);
 
         if (resultsData.results().isEmpty()) {
             throw new RuntimeException("Nenhum livro encontrado para: " + bookName);
