@@ -15,15 +15,15 @@ public class Author {
 
     @Column(unique = true)
     private String name;
-    private String birthYear;
-    private String deathYear;
+    private Integer birthYear;
+    private Integer deathYear;
 
     @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 
     public Author() {}
 
-    public Author(String name, String birthYear, String deathYear) {
+    public Author(String name, Integer birthYear, Integer deathYear) {
         this.name = name;
         this.birthYear = birthYear;
         this.deathYear = deathYear;
@@ -45,19 +45,19 @@ public class Author {
         this.name = name;
     }
 
-    public String getBirthYear() {
+    public Integer getBirthYear() {
         return birthYear;
     }
 
-    public void setBirthYear(String birth_year) {
-        this.birthYear = birth_year;
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
     }
 
-    public String getDeathYear() {
+    public Integer getDeathYear() {
         return deathYear;
     }
 
-    public void setDeathYear(String death_year) {
+    public void setDeathYear(Integer deathYear) {
         this.deathYear = deathYear;
     }
 
