@@ -73,4 +73,15 @@ public class BookService {
         List<Book> books = repository.findAll();
         books.forEach(System.out::println);
     }
+
+    public void  findBooksByLanguage(String language) {
+        List<Book> books = repository.findByLanguagesCode(language);
+        if (books.isEmpty()) {
+            System.out.println("\nNenhum livro encontrado para o idioma: " + language);
+        } else {
+            System.out.println("\n--------------------------------------------------\n");
+            System.out.println("\nLivros encontrados para o idioma " + language + ":\n");
+            books.forEach(System.out::println);
+        }
+    }
 }
