@@ -4,10 +4,11 @@ import br.com.alura_challenge.literalura.dto.BookData;
 import br.com.alura_challenge.literalura.model.Author;
 import br.com.alura_challenge.literalura.model.Book;
 import br.com.alura_challenge.literalura.model.Language;
-import br.com.alura_challenge.literalura.mapper.AuthorMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class BookMapper {
     public static Book toEntity(BookData data) {
         Book book = new Book();
