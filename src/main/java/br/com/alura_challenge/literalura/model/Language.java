@@ -12,7 +12,7 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String code;
-    @ManyToMany(mappedBy = "languages", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "languages")
     private List<Book> books = new ArrayList<>();
 
     public Language() {}
@@ -29,11 +29,11 @@ public class Language {
         this.id = id;
     }
 
-    public String getAcronyms() {
+    public String getCode() {
         return code;
     }
 
-    public void setAcronyms(String acronyms) {
+    public void setCode(String acronyms) {
         this.code = acronyms;
     }
 
