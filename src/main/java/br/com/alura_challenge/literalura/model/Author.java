@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="authors")
@@ -11,9 +12,10 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true)
     private String name;
-    private String birth_year;
-    private String death_year;
+    private String birthYear;
+    private String deathYear;
     @ManyToMany
     @JoinTable(
             name = "author_book",
@@ -24,10 +26,10 @@ public class Author {
 
     public Author() {}
 
-    public Author(String name, String birth_year, String death_year) {
+    public Author(String name, String birthYear, String deathYear) {
         this.name = name;
-        this.birth_year = birth_year;
-        this.death_year = death_year;
+        this.birthYear = birthYear;
+        this.deathYear = deathYear;
     }
 
     public Integer getId() {
@@ -47,19 +49,19 @@ public class Author {
     }
 
     public String getBirthYear() {
-        return birth_year;
+        return birthYear;
     }
 
     public void setBirthYear(String birth_year) {
-        this.birth_year = birth_year;
+        this.birthYear = birth_year;
     }
 
     public String getDeathYear() {
-        return death_year;
+        return deathYear;
     }
 
     public void setDeathYear(String death_year) {
-        this.death_year = death_year;
+        this.deathYear = deathYear;
     }
 
     public List<Book> getBooks() {
@@ -76,5 +78,28 @@ public class Author {
                 book.getAuthor().add(this);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n-----------------------------------------------------------------\n");
+        sb.append("Autor: ").append(this.name).append("\n");
+        sb.append("Ano de Nascimento: ").append(this.birthYear).append("\n");
+        sb.append("Ano de Falecimento: ").append(this.deathYear).append("\n");
+
+        if (books == null || books.isEmpty()) {
+            sb.append("Livros: Nenhum livro cadastrado\n");
+        } else {
+            String livros = books.stream()
+                    .map(Book::getTitle)
+                    .collect(Collectors.joining(", "));
+            String label = books.size() == 1 ? "Livro" : "Livros";
+            sb.append(label).append(": ").append(livros).append("\n");
+        }
+
+        sb.append("\n-----------------------------------------------------------------\n");
+
+        return sb.toString();
     }
 }
