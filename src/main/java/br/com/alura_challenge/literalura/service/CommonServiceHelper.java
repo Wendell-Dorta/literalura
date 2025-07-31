@@ -11,28 +11,14 @@ import java.util.Scanner;
 
 @Component
 public class CommonServiceHelper {
-    private final Scanner scanner = new Scanner(System.in);
     private final ConsumptionApi api;
     private final ConvertData convertData;
     private final String ENDERECO = "https://gutendex.com/books/?";
-    private final AuthorRepository authorRepository;
-    private final LanguageRepository languageRepository;
-    private final BookRepository bookRepository;
 
     public CommonServiceHelper(ConsumptionApi api,
-                               ConvertData convertData,
-                               BookRepository bookRepository,
-                               LanguageRepository languageRepository,
-                               AuthorRepository authorRepository) {
+                               ConvertData convertData) {
         this.api = api;
         this.convertData = convertData;
-        this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
-        this.languageRepository = languageRepository;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
     }
 
     public ConsumptionApi getApi() {
@@ -46,17 +32,4 @@ public class CommonServiceHelper {
     public String getEndereco() {
         return ENDERECO;
     }
-
-    public AuthorRepository getAuthorRepository() {
-        return authorRepository;
-    }
-
-    public LanguageRepository getLanguageRepository() {
-        return languageRepository;
-    }
-
-    public BookRepository getBookRepository() {
-        return bookRepository;
-    }
-
 }
