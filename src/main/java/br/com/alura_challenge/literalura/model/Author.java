@@ -2,6 +2,7 @@ package br.com.alura_challenge.literalura.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     public Author(String name, String birth_year, String death_year) {
         this.name = name;
@@ -60,6 +61,9 @@ public class Author {
     }
 
     public List<Book> getBooks() {
+        if (books == null) {
+            books = new ArrayList<>();
+        }
         return books;
     }
 
