@@ -22,6 +22,8 @@ public class Author {
     )
     private List<Book> books = new ArrayList<>();
 
+    public Author() {}
+
     public Author(String name, String birth_year, String death_year) {
         this.name = name;
         this.birth_year = birth_year;
