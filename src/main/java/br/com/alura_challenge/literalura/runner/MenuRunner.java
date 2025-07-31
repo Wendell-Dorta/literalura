@@ -39,7 +39,7 @@ public class MenuRunner {
                     bookService.searchBooksWeb();
                     break;
                 case 2:
-                    //searchRegisteredBooks();
+                    bookService.listAllBooks();
                     break;
                 case 3:
                     //listRegisteredAuthors();
