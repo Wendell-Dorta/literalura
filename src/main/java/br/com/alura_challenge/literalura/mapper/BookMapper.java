@@ -25,7 +25,7 @@ public class BookMapper {
         // Converte idiomas
         List<Language> languages = data.languages().stream()
                 .map(code -> {
-                    Language lang = new Language(code); // você pode adaptar isso conforme seu construtor
+                    Language lang = new Language(code);
                     lang.getBooks().add(book);
                     return lang;
                 })
