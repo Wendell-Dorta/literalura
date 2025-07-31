@@ -31,7 +31,7 @@ public class AuthorService {
     }
 
     public void listRegisteredAuthors() {
-        List<Author> authors = repository.findAll();
+        List<Author> authors = repository.findAllWithBooks();
         if (authors.isEmpty()) {
             System.out.println("Nenhum autor registrado no banco de dados.");
         } else {
