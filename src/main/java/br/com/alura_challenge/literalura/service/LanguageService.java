@@ -27,4 +27,11 @@ public class LanguageService {
 
         return repository.saveAll(languages);
     }
+
+    public void findAllLanguages() {
+        List<Language> languages = repository.findAll();
+        for (int i = 0; i < languages.size(); i++) {
+            System.out.println((i + 1)+ " - " + languages.get(i).getCode());
+        }
+    }
 }
