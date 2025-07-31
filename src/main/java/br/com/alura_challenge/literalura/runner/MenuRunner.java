@@ -39,7 +39,7 @@ public class MenuRunner {
 
             switch (opcao) {
                 case 1:
-                    bookService.searchBooksWeb();
+                    serchBookByTitle();
                     break;
                 case 2:
                     bookService.listAllBooks();
@@ -60,5 +60,11 @@ public class MenuRunner {
                     System.out.println("Opção inválida");
             }
         }
+    }
+
+    private void  serchBookByTitle() {
+        System.out.println("Qual o livro que deseja buscar?");
+        String bookName = scanner.nextLine();
+        bookService.searchBooksWeb(bookName);
     }
 }
