@@ -4,8 +4,6 @@ import br.com.alura_challenge.literalura.dto.BookData;
 import br.com.alura_challenge.literalura.dto.BookResultsData;
 import br.com.alura_challenge.literalura.mapper.BookMapper;
 import br.com.alura_challenge.literalura.model.Book;
-import br.com.alura_challenge.literalura.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +15,6 @@ public class BookService {
     public BookService(CommonServiceHelper helper) {
         this.helper = helper;
     }
-
-    @Autowired
-    private BookRepository bookRepository;
 
     private BookData getBookData() {
         System.out.println("Digite o nome de um livro para buscar");
@@ -41,12 +36,12 @@ public class BookService {
     public void searchBooksWeb() {
         BookData bookData = getBookData();
         Book book = BookMapper.toEntity(bookData);
-        bookRepository.save(book);
+        helper.getBookRepository().save(book);
         System.out.println(book);
     }
 
     public void listAllBooks() {
-        List<Book> books =bookRepository.findAll();
+        List<Book> books = helper.getBookRepository().findAll();
         books.forEach(System.out::println);
     }
 }
